@@ -1,0 +1,5 @@
+Minou, 2, 1234
+Felix, 4, 5678
+Tigrou, 1, 2335
+Grisou, 3, 6789
+Moustache, 5, 3456
