@@ -5,7 +5,7 @@
 #include "ctype.h"
 #define TAILLE_MAX 150
 #define MAX_ANIMAL 50
-
+#define YEAR    2025
 typedef struct{
 
     char espece[60];
@@ -68,12 +68,12 @@ char * lettre_minuscule(char * caract)
         fgets(chaine,255,stdin);//on utlise sa car le scanf s art si il y a un espace
         taille = strlen(chaine);
         if (taille> 0 && chaine[taille- 1] == '\n') {//permet d enlever le '\n' si il existe
-            chaine[taille- 1] = '\0';
+            chaine[taille- 1] = '\0';//explique ca 
         }
         en_lettre(chaine);
     } while(en_lettre(chaine)!=1);
     en_minuscule(chaine);
-    return chaine;
+    return chaine;//free() ?
     
 }
 int est_entier(char *caract)
@@ -91,7 +91,7 @@ int est_entier(char *caract)
     }while(verif_s!=1);
     return nb;
 }
-int est_entier_choix(char *caract,int min,int max)
+int est_entier_choix(int min,int max)
 {
     int choix,verif_s;
     do{
@@ -124,12 +124,11 @@ float est_flottant(char *caract)
     }while(verif_s!=1);
     return nb;
 }
-float est_flottant_choix(char *caract,int min,int max)
+float est_flottant_choix(int min,int max)
 {
    float choix;
    int verif_s;
     do{
-        printf("Ajoutez un %s",caract);
         printf("Selectionner : \n %d : OUI\n %d : NON\n",min,max);
         verif_s=scanf("%f",&choix);
         if(verif_s !=1 )
@@ -170,33 +169,61 @@ int id_unique(Animal t_animaux[],int *nb_animaux)
     return id;
 
 }
+int verif_taille_char(char *chaine)
+{
+    if(strlen(chaine)>2)
+    {
+        return 1;
+    }
+    else return 0;
+}
+void convertir_secondes(int t_secondes)
+{
+    int heures = t_secondes / 3600;
+    int minutes = (t_secondes % 3600) / 60;
+    int secondes = t_secondes % 60;
 
+    printf("%d heure(s), %d minute(s), %d seconde(s)\n", heures, minutes, secondes);
+}
 void aff(Animal t_animaux[],int *nb_animaux)
 {
     printf("\n--- Le Refuge ---\n");
-    for(int i=0;i<*nb_animaux;i++)
+    for(int i = 0; i < *nb_animaux; i++)
     {
-        printf("%d %s %s %d %f",t_animaux[i].id,t_animaux[i].nom,t_animaux[i].espece,t_animaux[i].annee,t_animaux[i].poids);
+        printf("ID : %d\n", t_animaux[i].id);
+        printf("Nom : %s\n", t_animaux[i].nom);
+        printf("Espece : %s\n", t_animaux[i].espece);
+        printf("Annee de naissance : %d\n", t_animaux[i].annee);
+        printf("Poids : %.2f kg\n", t_animaux[i].poids);
 
-        if(strlen(t_animaux[i].commentaire)>2){//probleme rencontre dans le cas ou il 'ny a pas de commentaire puisque optionnel
-            printf("%s\n",t_animaux[i].commentaire);
+        if(verif_taille_char(t_animaux[i].commentaire))
+        {
+            printf("Commentaire : %s\n", t_animaux[i].commentaire);
         }
+
+        printf("-----------------------------\n");
     }
-    
 }
-void fic_to_struct(Animal tab_animaux[])
+
+int fic_to_struct(Animal tab_animaux[])
 {//fonction de depart pour mettre tous les animaux du fichier dans la tabl struct
     char ligne[256],espece[256],nom[256],commentaire[256];
-    int n,id,annee,i=0;
+    int nb_animaux,n,id,annee,i=0;
     float poids;
 
     FILE *fic=fopen("animal.txt","r");
     if(fic == NULL)
     {
-        printf("Erreur d'ouverture du fichier\n");
-        return;
+        printf("Erreur d'ouverture du fichierhhhh\n");
+        exit(1);
     }
-    while (fgets(ligne, sizeof(ligne)-1, fic) != NULL)
+    if (fscanf(fic, "%d\n", &nb_animaux) != 1) {
+        printf("❌ Erreur : première ligne invalide.\n");
+        fclose(fic);
+        exit(1);
+    } 
+
+    while (fgets(ligne, sizeof(ligne)-1, fic) != NULL && i<MAX_ANIMAL)
     {
         n = sscanf(ligne, "%d %s %s %d %f %s",&id, nom, espece, &annee, &poids, commentaire);
 
@@ -219,7 +246,9 @@ void fic_to_struct(Animal tab_animaux[])
             strcpy(tab_animaux[i].commentaire, commentaire);
             i++;
         }
-    }// y a t-il un *nb_animaux a ajt ???
+    }
+    fclose(fic);
+    return i;
 }
 void ajt_animal_strt(Animal t_animaux[],int *nb_animaux)
 { //permet d'ajouter un animal dans  le tab structure animal(Pas dans le fichier)
@@ -229,41 +258,184 @@ void ajt_animal_strt(Animal t_animaux[],int *nb_animaux)
     int choix_c;
     printf("\n--- Ajouter un nouvel animal ---\n");
 
-    strcpy(a.nom,lettre_minuscule("nom"));
-    strcpy(a.espece,lettre_minuscule("espece"));
+    strcpy(a.nom,lettre_minuscule("nom "));
+    strcpy(a.espece,lettre_minuscule("espece "));
 
     a.annee=est_entier("annee_de_naissance ");
     a.poids=est_flottant("poids ");
-    choix_c=est_entier_choix("commentaire",0,1);
+    a.id=id_unique(t_animaux,nb_animaux);
+    choix_c=est_entier_choix(0,1);// 0=oui     1=Non
     if(choix_c == 0)
     {
         strcpy(a.commentaire,lettre_minuscule("commentaire "));
     }
     
     t_animaux[*nb_animaux] = a;
-    *(nb_animaux)++;  // ou (*nb_animaux) ????
+    (*nb_animaux)++;  // ou (*nb_animaux) ????
 }
 void ajt_animal_fic(Animal t_animaux[],int *nb_animaux)
 {//permet d'ajouter tous les animaux dans le fichier
-    FILE *fichier=fopen("animal.txt","a");
-    if(fichier == NULL)
+
+    FILE *fichier = fopen("animal.txt", "w");  // 
+    if (fichier == NULL)
     {
         printf("Erreur d'ouverture du fichier\n");
         return;
     }
+    fprintf(fichier, "%d\n", nb_animaux);
+
     for(int i=0;i<*nb_animaux;i++)//attention si pas de commentaire a modifier
     {
         fprintf(fichier, "%d %s %s %d %.2f", t_animaux[i].id, t_animaux[i].nom, t_animaux[i].espece,t_animaux[i].annee, t_animaux[i].poids);
-        if(strlen(t_animaux[i].commentaire>2))
+        if(verif_taille_char(t_animaux[i].commentaire))// fct qu verifie que la taille du commentaire >2 autrement dit qu'il y a bien un commentaire
         {
-            fprintf(fichir, "%s\n",t_animaux[i].commentaire);
+            fprintf(fichier, " %s\n",t_animaux[i].commentaire);
         }
     }
 fclose(fichier);
 }
+void recherche_animal(Animal t_animaux[],int *nb_animaux)
+{
+    char nom[256],espece[256];
+    int age,choix_a,find=0,flag;
+    do{
+        printf("\n--- RECHERCHER UN ANIMAL ---\n");
+        strcpy(nom,lettre_minuscule("nom "));
+        strcpy(espece,lettre_minuscule("espece "));
+        choix_a=est_entier_choix(0,1);//0= age<2      1= age>10
+    
+        if(choix_a==0)
+        {
+            do{
+                age=est_entier("age ");
+                if(age < 0 || age > 2)
+                {
+                    printf("Rappel !!\n L'age >0 et <2\n");
+                }
+            }while(age< 0 || age >2);
+        }
+        if(choix_a==1)
+        {
+            do{
+                age=est_entier("age ");
+                if(age < 10)
+                {
+                    printf("Rappel !!\n L'age >10\n");
+                }
+            }while(age < 10);
+        }
+    
+        for(int i=0;i<*nb_animaux;i++)//Recherche de l'animal dans le tableau
+        {
+            if(strcmp(t_animaux[i].nom,nom) == 0 && strcmp(t_animaux[i].espece,espece) == 0 && (YEAR - t_animaux[i].annee) == age)
+            {
+                printf("Super!\n Votre animal est au refuge\n");
+                printf("%d %s %s %d %f",t_animaux[i].id ,t_animaux[i].nom,t_animaux[i].espece,t_animaux[i].annee,t_animaux[i].poids);
+                if(verif_taille_char(t_animaux[i].commentaire))// fct qu verifie que la taille du commentaire >2 autrement dit qu'il y a bien un commentaire
+                {
+                    printf("%s\n",t_animaux[i].commentaire);
+                }
+                find=1;
+            }
+        }
+        if(!find)
+        {
+            printf("OUPS !\n Votre animal n'est pas ici\n");
+        }
+        flag=est_entier_choix(0,1);// 0= oui  1= Non
+    }while(flag == 0);
+   
+}
 
+void adoption(Animal t_animaux[],int *nb_animaux)
+{
+    int id,choix,find,z=0;
+    Animal temp_animaux[50];
+
+    aff(t_animaux,nb_animaux);
+
+    printf("\n--- Adopter un animal ---\n");
+    id=est_entier("id ");
+    for(int i=0;i<*nb_animaux;i++)
+    {
+        
+        if(t_animaux[i].id == id)
+        {
+            find=1;
+            printf("Très bon choix !\n Vous avez choissi %s\n",t_animaux[i].nom);
+            printf("Confirmer vous l'adoption\n");
+            choix=est_entier_choix(0,1);//0=oui     1=Non
+            if(choix == 0)
+            {
+                printf("Felicitation %s est a vous!\n Prenez bien soin de lui \n",t_animaux[i].nom);
+                continue;//Pas ajouter dans tabl temp
+            }
+            else{
+                printf("Adoption annule\n");
+            }
+        }
+        else{
+            temp_animaux[z]=t_animaux[i];
+            z++;
+        }
+    }
+
+    if(!find){
+        printf("Cette animal n'existe pas\n");
+        return;
+    }
+
+    for(int i=0;i<z;i++)//on copie le tabl temp dans le tableu de base
+    {
+        t_animaux[i]=temp_animaux[i];
+    }
+    *nb_animaux=z;
+
+    ajt_animal_fic(t_animaux,nb_animaux);
+}
+
+void day_clean(Animal t_animaux[],int *nb_animaux)
+{
+    
+    int charge_tr,quotidien=0,hebdo=0,t_minute=0;
+    printf("\n========= CHARGE DE NETTOYAGE HEBDOMADAIRE =========\n");
+ 
+    for(int i=0;i<*nb_animaux;i++)
+    {
+        if(strcmp(t_animaux[i].espece,"hamster") == 0 ||  strcmp(t_animaux[i].espece, "chat") == 0)
+        {
+            quotidien =10;
+            hebdo =20;
+        }
+        else if(strcmp(t_animaux[i].espece,"autruche"))
+        {
+            quotidien =20;
+            hebdo =45;
+        }
+        else if(strcmp(t_animaux[i].espece,"chien"))
+        {
+            quotidien =5;
+            hebdo = 20;
+        }
+        else{
+            quotidien=2;
+            hebdo=0;
+        }
+    charge_tr=(quotidien*7)+hebdo;
+    t_minute+=charge_tr;
+    printf("%-12s (%-8s) : %2d min/jour + %2d min/sem = %3d min/sem\n",t_animaux[i].nom,t_animaux[i].espece,quotidien,hebdo,charge_tr);
+}
+
+printf("-----------------------------------------------------\n");
+printf(" Temps total de nettoyage hebdomadaire : %d heures et %d minutes\n",t_minute / 60, t_minute % 60);
+}
 int main(){
     srand(time(NULL));
+    Animal t_animaux[50];
+    int nb_animaux=0;
+    nb_animaux=fic_to_struct(t_animaux);
+    aff(t_animaux, &nb_animaux);
+    day_clean(t_animaux, &nb_animaux);
 }
 
 

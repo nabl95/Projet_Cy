@@ -1,8 +1,11 @@
-Minou Chat 2 1001 gentil
-Rex Chien 5 1002
-Lapinou Lapin 1 1003 rapide
-Moustache Chat 12 1004
-Caramel Lapin 2 1007 doux
-Tigrou Chat 1 1008
-Medor Chien 8 1009
-Bunny Lapin 4 1010
+10
+1 minette chat 2019 4.2 douce
+2 rex chien 2020 18.5 
+3 lulu hamster 2022 0.3 rapide
+4 bella autruche 2018 120.0 
+5 milou chien 2021 17.1 
+6 titi chat 2022 3.9 timide
+7 speedy hamster 2023 0.25 
+8 doudou chien 2017 20.0 
+9 plume autruche 2020 110.5 majestueuse
+10 misty chat 2021 4.0 calme
