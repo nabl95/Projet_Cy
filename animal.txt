@@ -1,11 +1,10 @@
-10
-1 minette chat 2019 4.2 douce
-2 rex chien 2020 18.5 
-3 lulu hamster 2022 0.3 rapide
-4 bella autruche 2018 120.0 
-5 milou chien 2021 17.1 
-6 titi chat 2022 3.9 timide
-7 speedy hamster 2023 0.25 
-8 doudou chien 2017 20.0 
-9 plume autruche 2020 110.5 majestueuse
-10 misty chat 2021 4.0 calme
+9
+1 minette chat 2019 4.20 douce
+2 rex chien 2020 18.50
+3 lulu hamster 2022 0.30 rapide
+4 bella autruche 2018 120.00
+5 milou chien 2021 17.10
+6 titi chat 2022 3.90 timide
+8 doudou chien 2017 20.00
+9 plume autruche 2020 110.50 majestueuse
+10 misty chat 2021 4.00 calme
