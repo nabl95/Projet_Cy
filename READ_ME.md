@@ -6,17 +6,36 @@ Une application console en C pour gérer un chenil :
 - stockage persistant dans un fichier `animal.txt`
 
 ---
+## Descriptif fichier
+###main.c
+Point d’entrée principal du programme.
+Gère l’affichage du menu principal et la boucle d’exécution utilisateur.
 
-##  Arborescence du projet
-/ (racine)
-├── Makefile
-├── README.md
-├── animal.txt
-├── main.c
-├── refuge.c
-├── refuge.h
-├── util.c
-└── util.h
+###refuge.c
+Implémente les fonctions principales de gestion des animaux :
+ajout, suppression, recherche, modification, affichage et sauvegarde.
+
+###refuge.h
+Contient les définitions des structures (ex : Animal)
+et les prototypes des fonctions utilisées dans refuge.c.
+
+###util.c
+Contient les fonctions utilitaires :
+saisie sécurisée, mise en minuscules, validation de types, nettoyage de buffer, etc.
+
+###util.h
+Déclarations des fonctions utilitaires partagées dans tout le projet.
+
+###Makefile
+Fichier d’automatisation de la compilation.
+Permet de générer l’exécutable refuge à partir des fichiers .c.
+
+###animal.txt
+Fichier texte contenant la liste des animaux enregistrés.
+La premiere ligne contient le nombre total d'animaux du refuge
+Chaque ligne représente un animal avec ses attributs, séparés par des espace
+exemple : 6 titi chat 2022 3.90 timide
+
 
 ## Compilation & exécution
 
@@ -31,6 +50,8 @@ Une application console en C pour gérer un chenil :
     ```
 ## trinome :
 
-Nabil Touat
-Zinedine Zouini
+Nabil Touat    
+Zinedine Zouini    
 Ikram-fatima azzi
+
+
