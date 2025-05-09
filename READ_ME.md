@@ -9,7 +9,6 @@ Une application console en C pour gérer un chenil :
 
 ##  Arborescence du projet
 / (racine)
-
 ├── Makefile
 ├── README.md
 ├── animal.txt
