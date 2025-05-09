@@ -7,30 +7,30 @@ Une application console en C pour gérer un chenil :
 
 ---
 ## Descriptif fichier
-###main.c
+main.c
 Point d’entrée principal du programme.
 Gère l’affichage du menu principal et la boucle d’exécution utilisateur.
 
-###refuge.c
+### refuge.c
 Implémente les fonctions principales de gestion des animaux :
 ajout, suppression, recherche, modification, affichage et sauvegarde.
 
-###refuge.h
+### refuge.h
 Contient les définitions des structures (ex : Animal)
 et les prototypes des fonctions utilisées dans refuge.c.
 
-###util.c
+### util.c
 Contient les fonctions utilitaires :
 saisie sécurisée, mise en minuscules, validation de types, nettoyage de buffer, etc.
 
-###util.h
+### util.h
 Déclarations des fonctions utilitaires partagées dans tout le projet.
 
-###Makefile
+### Makefile
 Fichier d’automatisation de la compilation.
 Permet de générer l’exécutable refuge à partir des fichiers .c.
 
-###animal.txt
+### animal.txt
 Fichier texte contenant la liste des animaux enregistrés.
 La premiere ligne contient le nombre total d'animaux du refuge
 Chaque ligne représente un animal avec ses attributs, séparés par des espace
