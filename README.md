@@ -1,6 +1,7 @@
 # Refuge Animalier (Projet ChenYl-Tech)
 
-Une application console en C pour gérer un chenil :  
+Une application console en C pour gérer un chenil :
+- code final : projet info 
 - ajout, recherche, modification et suppression de fiches animales  
 - calcul de la charge de nettoyage  
 - stockage persistant dans un fichier `animal.txt`
