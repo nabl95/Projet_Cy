@@ -1,15 +1,8 @@
 #include "util.h"
 #include "refuge.h"
 
-// Vérifie et nettoie le buffer après un scanf d'entier
-void verif_scanf_entier() {
-  int c;
-  while ((c = getchar()) != '\n' && c != EOF)
-    ;
-}
-
-// Vérifie et nettoie le buffer après un scanf de flottant
-void verif_scanf_flottant() {
+// Vérifie et nettoie le buffer apres une saisie
+void clean_stdin() {
   int c;
   while ((c = getchar()) != '\n' && c != EOF)
     ;
@@ -19,8 +12,7 @@ void verif_scanf_flottant() {
 int en_lettre(char *chaine) {
   int i = 0;
   while (*(chaine + i) != '\0') {
-    if (!isalpha(*(chaine + i)) && *(chaine + i) != '-' &&
-        *(chaine + i) != ' ' && *(chaine + i) != '_') {
+    if (!isalpha(*(chaine + i)) && *(chaine + i) != '-' && *(chaine + i) != ' ' && *(chaine + i) != '_') {
       return 0;
     }
     i++;
@@ -35,8 +27,7 @@ void en_minuscule(char *chaine) {
     chaine++;
   }
 }
-
-// Lecture sécurisée d'une chaîne en minuscules
+// Lecture securisee d'une chaine en minuscules
 void lettre_minuscule(char *caract, char *chaine) {
   int taille;
   do {
@@ -52,45 +43,78 @@ void lettre_minuscule(char *caract, char *chaine) {
       }
     }
   } while (!en_lettre(chaine) || strlen(chaine) == 0);
-  en_minuscule(chaine);
+  en_minuscule(chaine); // placement important
 }
-
+// verifie que l'entree est bien un int
 int est_entier(char *caract) {
+  char buffer[MAX_CHAINE];
   int nb;
-  printf("Donner son %s: ", caract);
-  if (scanf("%d", &nb) != 1) {
-    printf("Erreur: saisie invalide pour un entier.\n");
-    clean_stdin(); // Nettoyer après scanf
-    return -1;
-  }
-  clean_stdin(); // Nettoyer après une saisie correcte aussi
-  return nb;
-}
+  int flag;
 
+  do {
+    flag = 1;
+    printf("Donner son %s: ", caract);
+
+    if (fgets(buffer, MAX_CHAINE, stdin) != NULL) {
+      buffer[strcspn(buffer, "\n")] = '\0';
+      for (int i = 0; buffer[i] != '\0'; i++) {
+        if (buffer[i] == ',' || (isdigit(buffer[i]) == 0)) {
+          flag = 0;
+          break;
+        }
+      }
+
+      if (flag) {
+        nb = atoi(buffer);
+        return nb;
+      }
+    } else {
+      printf("Erreur de saisie\n");
+      clean_stdin();
+    }
+  } while (!flag);
+  return -1; // car return dans le if juste pour eviter un bug on n'arrivera jamais au -1 sauf erreur
+}
+// verifie que l'entree est un int compris entre deux valeurs
 int est_entier_choix(int min, int max) {
   int choix;
   do {
     choix = est_entier("choix");
     if (choix < min || choix > max) {
-      printf("Choix invalide. Veuillez entrer une valeur entre %d et %d.\n",
-             min, max);
+      printf("Choix invalide. Veuillez entrer une valeur entre %d et %d.\n", min, max);
     }
   } while (choix < min || choix > max);
   return choix;
 }
-
+// verifie que l'entree est bien un float
 float est_flottant(char *caract) {
+  char buffer[MAX_CHAINE];
   float nb;
-  printf("Donner son %s: ", caract);
-  if (scanf("%f", &nb) != 1) {
-    printf("Erreur: saisie invalide pour un nombre flottant.\n");
-    verif_scanf_flottant();
-    return -1;
-  }
-  return nb;
-}
+  int flag;
 
-// Vérifie si l'entrée est un entier compris entre min et max
+  do {
+    flag = 1;
+    printf("Donner son %s: ", caract);
+
+    if (fgets(buffer, MAX_CHAINE, stdin) != NULL) {
+      for (int i = 0; buffer[i] != '\0'; i++) {
+        if (buffer[i] == ',' || buffer[i] == '?' || buffer[i] == ';' || buffer[i] == '!' || buffer[i] == '/' || buffer[i] == ':') {
+          flag = 0;
+          break;
+        }
+      }
+
+      if (flag) {
+        nb = atof(buffer);
+        return nb;
+      }
+    } else {
+      printf("Erreur de saisie\n");
+      clean_stdin();
+    }
+  } while (!flag);
+  return -1; // car return dans le if juste pour eviter un bug on n'arrivera jamais au -1 sauf erreur 
+}
 
 // Vérifie si l'entrée est un flottant compris entre min et max
 float est_flottant_choix(int min, int max) {
@@ -98,8 +122,7 @@ float est_flottant_choix(int min, int max) {
   do {
     choix = est_flottant("choix");
     if (choix < min || choix > max) {
-      printf("Choix invalide. Veuillez entrer une valeur entre %d et %d.\n",
-             min, max);
+      printf("Choix invalide. Veuillez entrer une valeur entre %d et %d.\n",min, max);
     }
   } while (choix < min || choix > max);
   return choix;
@@ -108,6 +131,7 @@ float est_flottant_choix(int min, int max) {
 // Vérifie si la longueur de la chaîne est suffisante
 int verif_taille_char(char *chaine) { return (strlen(chaine) > 2); }
 
+//creation / verification d'une valeur unique pour notre id
 int alea_id(Animal t_animaux[], int nb_animaux) {
   int id;
   int unique;
@@ -123,22 +147,8 @@ int alea_id(Animal t_animaux[], int nb_animaux) {
   } while (!unique);
   return id;
 }
-// Convertit des secondes en heures, minutes et secondes
-void convertir_secondes(int t_secondes) {
-  int heures = t_secondes / 3600;
-  int minutes = (t_secondes % 3600) / 60;
-  int secondes = t_secondes % 60;
-  printf("%d heure(s), %d minute(s), %d seconde(s)\n", heures, minutes,
-         secondes);
-}
 
-// Fonction pour nettoyer le buffer stdin après un scanf
-void clean_stdin() {
-  int c;
-  while ((c = getchar()) != '\n' && c != EOF)
-    ;
-}
-
+// verifie que l'entree est une annee possible
 int est_entier_annee(char *caract) {
   int nb;
   do {
@@ -149,9 +159,9 @@ int est_entier_annee(char *caract) {
       continue;
     }
     clean_stdin();
-    if (nb <= 0 || nb > YEAR) {
+    if (nb <= (YEAR - 70) || nb > YEAR) {
       printf("Erreur: l'année doit être comprise entre 1 et %d.\n", YEAR);
     }
-  } while (nb <= 0 || nb > YEAR);
+  } while (nb <= (YEAR - 70) || nb > YEAR);
   return nb;
 }
