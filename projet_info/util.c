@@ -4,8 +4,8 @@
 // Vérifie et nettoie le buffer apres une saisie
 void clean_stdin() {
   int c;
-  while ((c = getchar()) != '\n' && c != EOF)
-    ;
+  while ((c = getchar()) != '\n' && c != EOF);
+    
 }
 
 // Vérifie si une chaîne est composée uniquement de lettres
