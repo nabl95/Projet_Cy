@@ -1,6 +1,21 @@
-5
+20
 1 minette chat 2019 4.20 douce
-40 anis chien 2003 12.00 Aucun
-17 nabil autruche 2027 12.50 tres beau
-10 bobo popo 2003 12.70 Aucun
-11 ace chien 2022 12.30 Aucun
+2 rex chien 2018 20.50 joueur
+3 polly autruche 2015 0.90 bavard
+4 hert chat 2012 12.00 Aucun
+5 luna chien 2020 22.30 fidele
+6 taz autruche 2003 12.70 Aucun
+7 simba chat 2021 4.50 curieux
+8 lucky chien 2016 25.00 energique
+9 coco autruche 2014 1.10 bavard
+10 batbat chien 2021 12.00 Aucun
+11 belle chat 2017 3.90 douce
+12 spike chien 2019 30.00 protecteur
+13 ace chien 2012 12.60 sage
+14 nabz autruche 2013 12.80 Aucun 
+15 snow chat 2022 4.10 timide
+16 max chien 2015 28.40 sportif
+17 blue autruche 2011 22.95 chanteur
+18 maz chien 2024 12.00 Aucun
+19 aze chien 2016 12.50 mignon
+20 zoe chat 2010 4.00 discrete
