@@ -35,7 +35,7 @@ Permet de générer l’exécutable refuge à partir des fichiers .c.
 Fichier texte contenant la liste des animaux enregistrés.
 La premiere ligne contient le nombre total d'animaux du refuge
 Chaque ligne représente un animal avec ses attributs, séparés par des espace
-exemple : 6 titi chat 2022 3.90 timide
+exemple :  6 titi chat 2022 3.90 timide
 
 
 ## Compilation & exécution
