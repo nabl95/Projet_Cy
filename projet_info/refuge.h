@@ -16,9 +16,11 @@ typedef struct {
 // Fonctions principales du refuge
 void ajouter_animal(Animal t_animaux[], int *nb_animaux);
 void afficher_animaux(Animal t_animaux[], int nb_animaux);
+void afficher_animal(Animal a);
 void rechercher_animal(Animal t_animaux[], int nb_animaux);
 void adopter_animal(Animal t_animaux[], int *nb_animaux);
 void calculer_charge_nettoyage(Animal t_animaux[], int nb_animaux);
+void nb_par_espece_dec(Animal t_animaux[], int nb_animaux);
 
 // Fonctions de gestion de fichiers
 int fic_to_struct(Animal t_animaux[]);
