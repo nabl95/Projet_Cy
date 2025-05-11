@@ -6,22 +6,23 @@ void afficher_menu() {
   printf("                MENU PRINCIPAL - LE REFUGE ANIMALIER          \n");
   printf("============================================================\n\n");
   printf("    1. AFFICHER TOUS LES ANIMAUX\n");
-  printf("       -> Vous etre peut-etre a la recherche de votre prochaine "
-         "animal\n\tOn vous propose de les voir virtuellement\n\n");
+  printf("       -> Vous etre peut-etre a la recherche de votre prochaineanimal\n\tOn vous propose de les voir virtuellement\n\n");
+
   printf("    2. AJOUTER UN NOUVEL ANIMAL\n");
-  printf(
-      "       -> Vous venez de trouver un animal ? Ajoute le chez nous.\n\n");
+  printf("       -> Vous venez de trouver un animal ? Ajoute le chez nous.\n\n");
+
   printf("    3. RECHERCHER UN ANIMAL\n");
-  printf("       -> Vous avez perdu votre animal ou souhaitez vous "
-         "renseigner sur un animal de notre refuge ?\n\tRecherche le !\n\n");
+  printf("       -> Vous avez perdu votre animal ou souhaitez vous renseigner sur un animal de notre refuge ?\n\tRecherche le !\n\n");
+
   printf("    4. ADOPTER UN ANIMAL\n");
-  printf("       -> Vous avez eu un coup de coeur ? Passer a la vitesse "
-         "superieur en l'adoptant\n\n");
+  printf("       -> Vous avez eu un coup de coeur ? Passer a la vitesse superieur en l'adoptant\n\n");
+
   printf("    5. VOIR LA CHARGE DE NETTOYAGE\n");
-  printf("       -> Un animal vous interrese et vous souhaitez vous "
-         "renseigner sur son temps de netoyage ?\n\n");
+  printf("       -> Un animal vous interrese et vous souhaitez vous renseigner sur son temps de netoyage ?\n\n");
+
   printf("    6. INVENTAIRE PAR ESPECE\n");
   printf("       -> AFFICHAGE DES ANIMAUX PAR RACE\n\n");
+
   printf("    0. QUITTER\n");
   printf("       -> Ferme le programme.\n\n");
   printf("============================================================\n");
@@ -68,11 +69,11 @@ int main() {
       break;
 
     case 0:
-      printf("Données enregistrées. Au revoir !\n");
+      printf("Donnees enregistrees. Au revoir !\n");
       break;
 
     default:
-      printf("Option invalide. Veuillez réessayer.\n");
+      printf("Option invalide. Veuillez reessayer.\n");
     }
   } while (choix != 0);
 
